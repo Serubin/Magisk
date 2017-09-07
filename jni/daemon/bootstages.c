@@ -649,9 +649,12 @@ void post_fs_data(int client) {
 		file_to_vector("/proc/mounts", &mounts);
 		char *line;
 		vec_for_each(&mounts, line) {
+            LOGI("DEBUG: line: %s\n", line); // Print line line
 			if (strstr(line, " /system ")) {
 				sscanf(line, "%s", buf);
 				snprintf(buf2, PATH_MAX, "%s/system", MIRRDIR);
+				LOGI("DEBUG: buf: %ss\n", buf);
+				LOGI("DEBUG: buf2: %ss\n", buf2);
 				xmkdir_p(buf2, 0755);
 				xmount(buf, buf2, "ext4", MS_RDONLY, NULL);
 				LOGI("mount: %s -> %s\n", buf, buf2);
